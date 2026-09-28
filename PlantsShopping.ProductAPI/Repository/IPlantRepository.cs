@@ -2,7 +2,7 @@
 
 namespace PlantsShopping.ProductAPI.Repository
 {
-    public interface IProductRepository
+    public interface IPlantRepository
     {
         Task<IEnumerable<PlantVO>> FindAll();
         Task<PlantVO> FindById(long id);

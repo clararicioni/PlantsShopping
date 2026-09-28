@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PlantsShopping.ProductAPI.Data.ValueObjects;
-
 namespace PlantsShopping.ProductAPI.Config
 {
     public class MappingConfig
