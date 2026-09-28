@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PlantsShopping.ProductAPI.Config;
 using PlantsShopping.ProductAPI.Model.Context;
+using PlantsShopping.ProductAPI.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,8 @@ var app = builder.Build();
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IPlantRepository, PlantRepository>();
 
 if (app.Environment.IsDevelopment())
 {
