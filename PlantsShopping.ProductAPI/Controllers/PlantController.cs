@@ -32,7 +32,7 @@ namespace PlantsShopping.ProductAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlantVO>> Create(PlantVO vo)
+        public async Task<ActionResult<PlantVO>> Create([FromBody]PlantVO vo)
         {
             if (vo == null) return BadRequest();
             var plant = await _repository.Create(vo);
