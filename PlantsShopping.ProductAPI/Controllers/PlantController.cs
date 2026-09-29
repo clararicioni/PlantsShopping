@@ -27,7 +27,7 @@ namespace PlantsShopping.ProductAPI.Controllers
         public async Task<ActionResult<PlantVO>> FindById(long id)
         {
             var plant = await _repository.FindById(id);
-            if (plant == null) return NotFound();
+            if(plant.Id <= 0) return NotFound();
             return Ok(plant);
         }
 
