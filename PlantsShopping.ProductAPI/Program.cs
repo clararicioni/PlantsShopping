@@ -17,13 +17,13 @@ var connection = builder.Configuration
 builder.Services.AddDbContext<PostgreContext>(options =>
     options.UseNpgsql(connection));
 
-var app = builder.Build();
-
+// AutoMapper
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IPlantRepository, PlantRepository>();
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

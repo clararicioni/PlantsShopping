@@ -8,6 +8,6 @@ namespace PlantsShopping.ProductAPI.Repository
         Task<PlantVO> FindById(long id);
         Task<PlantVO> Create(PlantVO vo);
         Task<PlantVO> Update(PlantVO vo);
-        Task Delete(long id);
+        Task<bool> Delete(long id);
     }
 }

@@ -41,7 +41,7 @@ namespace PlantsShopping.ProductAPI.Repository
             await _context.SaveChangesAsync();
             return _mapper.Map<PlantVO>(plant);
         }
-        Task IPlantRepository.Delete(long id)
+        public async Task<bool> Delete(long id)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace PlantsShopping.ProductAPI.Repository
                     _context.Plants.Remove(plant);
                     _context.SaveChanges();
                 }
-                return Task.CompletedTask;
+                return true;
 
             }
             catch (Exception)
