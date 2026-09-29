@@ -24,7 +24,7 @@ namespace PlantsShopping.ProductAPI.Repository
 
         public async Task<PlantVO> FindById(long id)
         {
-            Plant plant = await _context.Plants.Where(p => p.Id == id).FirstOrDefaultAsync();
+            Plant plant = await _context.Plants.Where(p => p.Id == id).FirstOrDefaultAsync() ?? new Plant();
             return _mapper.Map<PlantVO>(plant);
         }
         public async Task<PlantVO> Create(PlantVO vo)
@@ -41,17 +41,17 @@ namespace PlantsShopping.ProductAPI.Repository
             await _context.SaveChangesAsync();
             return _mapper.Map<PlantVO>(plant);
         }
-        Task IPlantRepository.Delete(long id)
+        public async Task<bool> Delete(long id)
         {
             try
             {
-                Plant plant = _context.Plants.Where(p => p.Id == id).FirstOrDefault();
+                Plant plant = await _context.Plants.Where(p => p.Id == id).FirstOrDefaultAsync() ?? new Plant();
                 if (plant != null)
                 {
                     _context.Plants.Remove(plant);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
-                return Task.CompletedTask;
+                return true;
 
             }
             catch (Exception)

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using PlantsShopping.ProductAPI.Data.ValueObjects;
+
 namespace PlantsShopping.ProductAPI.Config
 {
     public class MappingConfig
@@ -10,7 +12,7 @@ namespace PlantsShopping.ProductAPI.Config
             {
                 cfg.CreateMap<PlantVO, Model.Plant>();
                 cfg.CreateMap<Model.Plant, PlantVO>();
-            }, null);
+            }, LoggerFactory.Create(builder => { }));
 
             return mappingConfig;
         }
