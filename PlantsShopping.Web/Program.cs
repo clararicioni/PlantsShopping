@@ -1,7 +1,13 @@
+using PlantsShopping.Web.Services;
+using PlantsShopping.Web.Services.IServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<IPlantService, PlantService>(c =>
+    c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:PlantsShoppingApi"]));
 
 var app = builder.Build();
 
