@@ -9,8 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
+var plantsApiUrl = builder.Configuration["ServiceUrls:PlantsShoppingApi"];
+if (string.IsNullOrEmpty(plantsApiUrl))
+{
+    throw new InvalidOperationException("Configuration key 'ServiceUrls:PlantsShoppingApi' is missing or empty. Set it in appsettings.json or environment variables.");
+}
+if (!Uri.TryCreate(plantsApiUrl, UriKind.Absolute, out var plantsApiUri))
+{
+    throw new InvalidOperationException($"Configuration key 'ServiceUrls:PlantsShoppingApi' is not a valid absolute URL: '{plantsApiUrl}'.");
+}
 builder.Services.AddHttpClient<IPlantService, PlantService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:PlantsShoppingApi"]));
+    c.BaseAddress = plantsApiUri);
 
 builder.Services.AddCors(options =>
 {
