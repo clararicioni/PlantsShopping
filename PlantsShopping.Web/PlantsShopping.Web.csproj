@@ -1,9 +1,35 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="10.0.12" />
+  </ItemGroup>
+
+  <!-- Build Angular production assets and copy into wwwroot so the ASP.NET app can serve the SPA in production -->
+  <PropertyGroup>
+    <ClientAppDir>ClientApp</ClientAppDir>
+  </PropertyGroup>
+
+  <Target Name="BuildClientApp" BeforeTargets="Publish">
+    <Message Text="Building Angular client app (production) in $(ClientAppDir)..." Importance="High" />
+    <!-- Install dependencies (no-op if already installed) -->
+    <Exec WorkingDirectory="$(ClientAppDir)" Command="npm install" />
+    <!-- Build production bundle. Adjust command if your Angular project uses a different build script or configuration name -->
+    <Exec WorkingDirectory="$(ClientAppDir)" Command="npm run build -- --configuration production" />
+
+    <!-- Copy produced files from ClientApp/dist to wwwroot preserving directory structure -->
+    <ItemGroup>
+      <ClientDistFiles Include="$(ClientAppDir)\dist\**\*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(ClientDistFiles)"
+          DestinationFiles="@(ClientDistFiles->'$(ProjectDir)wwwroot\\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

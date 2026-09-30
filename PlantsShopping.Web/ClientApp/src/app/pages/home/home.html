@@ -1,0 +1,14 @@
+<div *ngIf="(plants$ | async) as plants; else loading">
+  <div class="grid">
+    <div class="card" *ngFor="let p of plants">
+      <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{p.name}}" />
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+      <div class="price">{{ p.price | currency }}</div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div>Loading plants...</div>
+</ng-template>
