@@ -78,4 +78,12 @@ export class Home implements OnInit {
 
     this.plantasFiltradas = resultado;
   }
+
+  editarPlanta(planta: Plant): void {
+    console.log('Editar planta:', planta);
+  }
+
+  excluirPlanta(planta: Plant): void {
+    console.log('Excluir planta:', planta);
+  }
 }
