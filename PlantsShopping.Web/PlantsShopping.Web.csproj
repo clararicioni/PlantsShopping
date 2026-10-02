@@ -10,6 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="10.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\img\" />
+  </ItemGroup>
+
   <!-- Build Angular production assets and copy into wwwroot so the ASP.NET app can serve the SPA in production -->
   <PropertyGroup>
     <ClientAppDir>ClientApp</ClientAppDir>
@@ -27,9 +31,7 @@
       <ClientDistFiles Include="$(ClientAppDir)\dist\**\*.*" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(ClientDistFiles)"
-          DestinationFiles="@(ClientDistFiles->'$(ProjectDir)wwwroot\\%(RecursiveDir)%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ClientDistFiles)" DestinationFiles="@(ClientDistFiles->'$(ProjectDir)wwwroot\\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

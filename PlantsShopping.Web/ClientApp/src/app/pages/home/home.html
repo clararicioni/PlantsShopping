@@ -1,14 +1,101 @@
-<div *ngIf="(plants$ | async) as plants; else loading">
-  <div class="grid">
-    <div class="card" *ngFor="let p of plants">
-      <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{p.name}}" />
-      <h3>{{ p.name }}</h3>
-      <p>{{ p.description }}</p>
-      <div class="price">{{ p.price | currency }}</div>
-    </div>
-  </div>
-</div>
+<div class="container mt-4">
 
-<ng-template #loading>
-  <div>Loading plants...</div>
-</ng-template>
+  <div class="filters mb-4">
+
+    <div class="filter-group">
+
+      <label for="filtroPreco">
+        Filtrar por preço
+      </label>
+
+      <select id="filtroPreco"
+              class="form-select"
+              [(ngModel)]="filtroPreco"
+              (ngModelChange)="filtrarPlantas()">
+        <option value="todos">
+          Todos
+        </option>
+
+        <option value="menor">
+          Menor preço
+        </option>
+
+        <option value="maior">
+          Maior preço
+        </option>
+      </select>
+
+    </div>
+
+    <div class="filter-group">
+
+      <label for="ordemNome">
+        Ordem alfabética
+      </label>
+
+      <select id="ordemNome"
+              class="form-select"
+              [(ngModel)]="ordemNome"
+              (ngModelChange)="filtrarPlantas()">
+        <option value="az">
+          A → Z
+        </option>
+
+        <option value="za">
+          Z → A
+        </option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3"
+         *ngFor="let p of plantasFiltradas">
+
+      <div class="card plant-card h-100 shadow-sm">
+
+        <span *ngIf="p.price === 0"
+              class="donation-badge">
+          DOA-SE
+        </span>
+
+        <img [src]="p.imageUrl"
+             [alt]="p.name"
+             class="card-img-top plant-image" />
+
+        <div class="card-body d-flex flex-column">
+
+          <h5 class="card-title">
+            {{ p.name }}
+          </h5>
+
+          <p class="card-text">
+            {{ p.description }}
+          </p>
+
+          <div class="price-area mt-auto">
+
+            <h5 *ngIf="p.price === 0"
+                class="donation-text">
+              🌱 Doação
+            </h5>
+
+            <h5 *ngIf="p.price > 0"
+                class="sale-price">
+              {{ p.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            </h5>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

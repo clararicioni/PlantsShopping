@@ -7,7 +7,7 @@ export interface Plant {
   name: string;
   description?: string;
   imageUrl?: string;
-  price?: number;
+  price: number;
 }
 
 @Injectable({
@@ -16,7 +16,7 @@ export interface Plant {
 export class PlantService {
   private apiUrl = '/api/v1/Plant';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getPlants(): Observable<Plant[]> {
     return this.http.get<Plant[]>(this.apiUrl);
