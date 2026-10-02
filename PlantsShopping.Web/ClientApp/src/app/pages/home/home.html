@@ -90,6 +90,26 @@
 
           </div>
 
+          <div class="card-actions">
+
+            <button type="button"
+                    class="action-button edit-button"
+                    (click)="editarPlanta(p)"
+                    title="Editar planta">
+              <i class="fa-solid fa-pen"></i>
+              Editar
+            </button>
+
+            <button type="button"
+                    class="action-button delete-button"
+                    (click)="excluirPlanta(p)"
+                    title="Excluir planta">
+              <i class="fa-solid fa-trash"></i>
+              Excluir
+            </button>
+
+          </div>
+
         </div>
 
       </div>
