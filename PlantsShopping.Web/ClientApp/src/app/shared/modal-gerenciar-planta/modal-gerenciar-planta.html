@@ -6,15 +6,15 @@
 
       <div>
         <span class="modal-label">
-          NOVA PLANTA
+          {{ modoEdicao ? 'EDITAR PLANTA' : 'NOVA PLANTA' }}
         </span>
 
         <h2>
-          Inserir planta
+          {{ modoEdicao ? 'Editar planta' : 'Inserir planta' }}
         </h2>
 
         <p>
-          Cadastre uma planta para venda ou doação.
+          {{ modoEdicao ? 'Atualize os dados da planta.' : 'Cadastre uma planta para venda ou doação.'}}
         </p>
       </div>
 
@@ -216,8 +216,11 @@
 
         <button type="submit"
                 class="save-button">
-          <i class="fa-solid fa-plus"></i>
-          Cadastrar planta
+
+          <i class="fa-solid" [class.fa-pen]="modoEdicao" [class.fa-plus]="!modoEdicao"></i>
+
+          {{ modoEdicao ? 'Salvar alterações' : 'Cadastrar planta' }}
+
         </button>
 
       </div>

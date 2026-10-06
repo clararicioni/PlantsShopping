@@ -8,6 +8,7 @@ export interface Plant {
   description?: string;
   imageUrl?: string;
   price: number;
+  categoryName?: string;
 }
 
 export interface CreatePlant {
@@ -32,5 +33,9 @@ export class PlantService {
 
   criarPlanta(planta: CreatePlant): Observable<Plant> {
     return this.http.post<Plant>(this.apiUrl, planta);
+  }
+
+  atualizarPlanta(planta: Plant): Observable<Plant> {
+    return this.http.put<Plant>(this.apiUrl, planta);
   }
 }

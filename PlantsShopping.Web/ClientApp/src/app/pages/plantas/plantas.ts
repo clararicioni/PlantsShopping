@@ -9,7 +9,7 @@ import {
   CreatePlant
 } from '../../services/plant.service';
 
-import { ModalInserirPlanta } from '../../shared/modal-inserir-planta/modal-inserir-planta';
+import { ModalGerenciarPlanta } from '../../shared/modal-gerenciar-planta/modal-gerenciar-planta';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -19,7 +19,7 @@ registerLocaleData(localePt, 'pt-BR');
   imports: [
     CommonModule,
     FormsModule,
-    ModalInserirPlanta
+    ModalGerenciarPlanta
   ],
   templateUrl: './plantas.html',
   styleUrl: './plantas.css',
@@ -28,6 +28,7 @@ export class Plantas implements OnInit {
 
   plants: Plant[] = [];
   plantasFiltradas: Plant[] = [];
+  plantaEmEdicao: Plant | null = null;
 
   filtroPreco = 'todos';
   ordemNome = 'az';
@@ -93,26 +94,30 @@ export class Plantas implements OnInit {
   }
 
   abrirModalInserir(): void {
+    this.plantaEmEdicao = null;
     this.mostrarModal = true;
   }
 
   fecharModalInserir(): void {
     this.mostrarModal = false;
+    this.plantaEmEdicao = null;
   }
 
-  criarPlanta(planta: CreatePlant): void {
+  salvarPlanta(planta: CreatePlant | Plant): void {
     if (this.salvandoPlanta) {
       return;
     }
 
     this.salvandoPlanta = true;
 
-    console.log('Objeto enviado:', planta);
+    const requisicao = 'id' in planta
+      ? this.plantService.atualizarPlanta(planta)
+      : this.plantService.criarPlanta(planta);
 
-    this.plantService.criarPlanta(planta).subscribe({
+    requisicao.subscribe({
       next: () => {
         this.salvandoPlanta = false;
-        this.mostrarModal = false;
+        this.fecharModalInserir();
         this.carregarPlantas();
       },
       error: (error) => {
@@ -126,7 +131,8 @@ export class Plantas implements OnInit {
   }
 
   editarPlanta(planta: Plant): void {
-    console.log('Editar planta:', planta);
+    this.plantaEmEdicao = planta;
+    this.mostrarModal = true;
   }
 
   excluirPlanta(planta: Plant): void {
