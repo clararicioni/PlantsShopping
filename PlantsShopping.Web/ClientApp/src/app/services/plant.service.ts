@@ -38,4 +38,8 @@ export class PlantService {
   atualizarPlanta(planta: Plant): Observable<Plant> {
     return this.http.put<Plant>(this.apiUrl, planta);
   }
+
+  excluirPlanta(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
