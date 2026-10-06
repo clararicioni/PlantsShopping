@@ -1,121 +1,114 @@
-<div class="container mt-4">
+<div class="home-page">
 
-  <div class="filters mb-4">
+  <section class="hero">
+    <div class="hero-content">
 
-    <div class="filter-group">
+      <span class="hero-label">
+        🌱 PLANTS SHOPPING
+      </span>
 
-      <label for="filtroPreco">
-        Filtrar por preço
-      </label>
+      <h1>
+        Leve mais vida
+        <span>para sua casa.</span>
+      </h1>
 
-      <select id="filtroPreco"
-              class="form-select"
-              [(ngModel)]="filtroPreco"
-              (ngModelChange)="filtrarPlantas()">
-        <option value="todos">
-          Todos
-        </option>
+      <p>
+        Encontre plantas para comprar ou receber em doação
+        e transforme seus espaços com mais verde.
+      </p>
 
-        <option value="menor">
-          Menor preço
-        </option>
+      <div class="hero-actions">
+        <a routerLink="/plantas" class="primary-button">
+          <i class="fa-solid fa-leaf"></i>
+          Ver plantas
+        </a>
 
-        <option value="maior">
-          Maior preço
-        </option>
-      </select>
-
-    </div>
-
-    <div class="filter-group">
-
-      <label for="ordemNome">
-        Ordem alfabética
-      </label>
-
-      <select id="ordemNome"
-              class="form-select"
-              [(ngModel)]="ordemNome"
-              (ngModelChange)="filtrarPlantas()">
-        <option value="az">
-          A → Z
-        </option>
-
-        <option value="za">
-          Z → A
-        </option>
-      </select>
-
-    </div>
-
-  </div>
-
-  <div class="row g-4">
-
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3"
-         *ngFor="let p of plantasFiltradas">
-
-      <div class="card plant-card h-100 shadow-sm">
-
-        <span *ngIf="p.price === 0"
-              class="donation-badge">
-          DOA-SE
-        </span>
-
-        <img [src]="p.imageUrl"
-             [alt]="p.name"
-             class="card-img-top plant-image" />
-
-        <div class="card-body d-flex flex-column">
-
-          <h5 class="card-title">
-            {{ p.name }}
-          </h5>
-
-          <p class="card-text">
-            {{ p.description }}
-          </p>
-
-          <div class="price-area mt-auto">
-
-            <h5 *ngIf="p.price === 0"
-                class="donation-text">
-              🌱 Doação
-            </h5>
-
-            <h5 *ngIf="p.price > 0"
-                class="sale-price">
-              {{ p.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            </h5>
-
-          </div>
-
-          <div class="card-actions">
-
-            <button type="button"
-                    class="action-button edit-button"
-                    (click)="editarPlanta(p)"
-                    title="Editar planta">
-              <i class="fa-solid fa-pen"></i>
-              Editar
-            </button>
-
-            <button type="button"
-                    class="action-button delete-button"
-                    (click)="excluirPlanta(p)"
-                    title="Excluir planta">
-              <i class="fa-solid fa-trash"></i>
-              Excluir
-            </button>
-
-          </div>
-
-        </div>
-
+        <a routerLink="/sobre" class="secondary-button">
+          Conheça o projeto
+        </a>
       </div>
 
     </div>
 
-  </div>
+    <div class="hero-plant">
+      <i class="fa-solid fa-seedling"></i>
+    </div>
+  </section>
+
+  <section class="highlights">
+
+    <div class="highlight-card">
+      <div class="highlight-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+
+      <div>
+        <h3>Encontre sua planta</h3>
+        <p>
+          Navegue pelo nosso catálogo e encontre plantas
+          para diferentes ambientes.
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <div class="highlight-icon">
+        <i class="fa-solid fa-hand-holding-heart"></i>
+      </div>
+
+      <div>
+        <h3>Plantas para doação</h3>
+        <p>
+          Algumas plantas estão disponíveis gratuitamente
+          para quem deseja dar um novo lar a elas.
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <div class="highlight-icon">
+        <i class="fa-solid fa-house"></i>
+      </div>
+
+      <div>
+        <h3>Mais verde em casa</h3>
+        <p>
+          Deixe seus ambientes mais agradáveis trazendo
+          um pouco mais de natureza para perto.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="catalog-section">
+
+    <div class="catalog-content">
+
+      <span class="section-label">
+        NOSSO CATÁLOGO
+      </span>
+
+      <h2>
+        Descubra novas plantas
+      </h2>
+
+      <p>
+        Confira todas as plantas disponíveis no PlantsShopping,
+        veja seus detalhes, preços e opções de doação.
+      </p>
+
+      <a routerLink="/plantas" class="catalog-button">
+        Explorar plantas
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+
+    </div>
+
+    <div class="catalog-icon">
+      <i class="fa-solid fa-spa"></i>
+    </div>
+
+  </section>
 
 </div>
