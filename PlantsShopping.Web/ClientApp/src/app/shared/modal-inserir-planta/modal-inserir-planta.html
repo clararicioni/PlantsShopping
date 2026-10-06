@@ -1,0 +1,229 @@
+<div class="modal-overlay" (click)="fecharModal()">
+
+  <div class="modal-container" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+
+      <div>
+        <span class="modal-label">
+          NOVA PLANTA
+        </span>
+
+        <h2>
+          Inserir planta
+        </h2>
+
+        <p>
+          Cadastre uma planta para venda ou doação.
+        </p>
+      </div>
+
+      <button type="button"
+              class="close-button"
+              (click)="fecharModal()"
+              title="Fechar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <form (ngSubmit)="salvarPlanta()">
+
+      <div class="form-group">
+        <label for="nome">
+          Nome da planta
+        </label>
+
+        <input id="nome"
+               type="text"
+               name="nome"
+               [(ngModel)]="nome"
+               placeholder="Ex.: Monstera"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">
+          Descrição
+        </label>
+
+        <textarea id="descricao"
+                  name="descricao"
+                  [(ngModel)]="descricao"
+                  rows="4"
+                  placeholder="Descreva a planta..."
+                  required>
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="categoria">
+          Categoria
+        </label>
+
+        <select id="categoria"
+                name="categoria"
+                [(ngModel)]="categoria"
+                required>
+
+          <option value="" disabled>
+            Selecione uma categoria
+          </option>
+
+          <option *ngFor="let item of categorias"
+                  [value]="item">
+            {{ item }}
+          </option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="imagemUrl">
+          URL da imagem
+        </label>
+
+        <input id="imagemUrl"
+               type="url"
+               name="imagemUrl"
+               [(ngModel)]="imagemUrl"
+               (ngModelChange)="imagemValida = true"
+               placeholder="https://..."
+               required>
+      </div>
+
+      <div class="image-preview"
+           *ngIf="imagemUrl">
+
+        <span class="preview-label">
+          PRÉ-VISUALIZAÇÃO
+        </span>
+
+        <img [src]="imagemUrl"
+             alt="Pré-visualização da planta"
+             (error)="imagemValida = false"
+             (load)="imagemValida = true">
+
+        <div class="preview-error"
+             *ngIf="!imagemValida">
+
+          <i class="fa-solid fa-triangle-exclamation"></i>
+
+          <span>
+            Não foi possível carregar essa imagem.
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+          Disponibilidade
+        </label>
+
+        <div class="type-options">
+
+          <label class="type-option"
+                 [class.selected]="tipo === 'venda'">
+
+            <input type="radio"
+                   name="tipo"
+                   value="venda"
+                   [(ngModel)]="tipo"
+                   (ngModelChange)="alterarTipo()">
+
+            <span class="type-icon">
+              <i class="fa-solid fa-tag"></i>
+            </span>
+
+            <span>
+              <strong>Venda</strong>
+              <small>Definir um preço</small>
+            </span>
+
+          </label>
+
+          <label class="type-option"
+                 [class.selected]="tipo === 'doacao'">
+
+            <input type="radio"
+                   name="tipo"
+                   value="doacao"
+                   [(ngModel)]="tipo"
+                   (ngModelChange)="alterarTipo()">
+
+            <span class="type-icon">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+            </span>
+
+            <span>
+              <strong>Doação</strong>
+              <small>Disponível gratuitamente</small>
+            </span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+      <div class="form-group"
+           *ngIf="tipo === 'venda'">
+
+        <label for="preco">
+          Preço
+        </label>
+
+        <div class="price-input">
+
+          <span>
+            R$
+          </span>
+
+          <input id="preco"
+                 type="number"
+                 name="preco"
+                 [(ngModel)]="preco"
+                 min="0.01"
+                 step="0.01"
+                 placeholder="0,00"
+                 required>
+
+        </div>
+
+      </div>
+
+      <div class="donation-info"
+           *ngIf="tipo === 'doacao'">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <span>
+          Esta planta será cadastrada como disponível para doação.
+        </span>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button type="button"
+                class="cancel-button"
+                (click)="fecharModal()">
+          Cancelar
+        </button>
+
+        <button type="submit"
+                class="save-button">
+          <i class="fa-solid fa-plus"></i>
+          Cadastrar planta
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

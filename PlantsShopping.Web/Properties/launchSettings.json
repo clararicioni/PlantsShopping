@@ -2,7 +2,7 @@
   "profiles": {
     "http": {
       "commandName": "Project",
-      "commandLineArgs": "ng serve --open --proxy-config proxy.conf.json",
+      "commandLineArgs": "ng serve --open --proxy-config proxy.conf.json --live-reload=false",
       "workingDirectory": "C:\\Users\\Clara\\source\\repos\\PlantsShopping\\PlantsShopping.Web\\ClientApp",
       "launchBrowser": true,
       "launchUrl": "http://localhost:4200",

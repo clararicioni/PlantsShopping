@@ -1,5 +1,35 @@
 <div class="container mt-4">
 
+  <div class="catalog-header">
+
+    <div>
+      <span class="section-label">
+        CATÁLOGO
+      </span>
+
+      <h1>
+        Plantas
+      </h1>
+
+      <p>
+        Encontre plantas para comprar ou receber em doação.
+      </p>
+    </div>
+
+    <button type="button"
+            class="add-plant-button"
+            (click)="abrirModalInserir()">
+
+      <i class="fa-solid fa-plus"></i>
+
+      <span>
+        Inserir planta
+      </span>
+
+    </button>
+
+  </div>
+
   <div class="filters mb-4">
 
     <div class="filter-group">
@@ -12,6 +42,7 @@
               class="form-select"
               [(ngModel)]="filtroPreco"
               (ngModelChange)="filtrarPlantas()">
+
         <option value="todos">
           Todos
         </option>
@@ -23,6 +54,7 @@
         <option value="maior">
           Maior preço
         </option>
+
       </select>
 
     </div>
@@ -37,6 +69,7 @@
               class="form-select"
               [(ngModel)]="ordemNome"
               (ngModelChange)="filtrarPlantas()">
+
         <option value="az">
           A → Z
         </option>
@@ -44,6 +77,7 @@
         <option value="za">
           Z → A
         </option>
+
       </select>
 
     </div>
@@ -96,16 +130,22 @@
                     class="action-button edit-button"
                     (click)="editarPlanta(p)"
                     title="Editar planta">
+
               <i class="fa-solid fa-pen"></i>
+
               Editar
+
             </button>
 
             <button type="button"
                     class="action-button delete-button"
                     (click)="excluirPlanta(p)"
                     title="Excluir planta">
+
               <i class="fa-solid fa-trash"></i>
+
               Excluir
+
             </button>
 
           </div>
@@ -119,3 +159,8 @@
   </div>
 
 </div>
+
+<app-modal-inserir-planta *ngIf="mostrarModal"
+                          (fechar)="fecharModalInserir()"
+                          (salvar)="criarPlanta($event)">
+</app-modal-inserir-planta>
