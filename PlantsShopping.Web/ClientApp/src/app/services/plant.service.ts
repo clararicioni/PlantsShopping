@@ -10,6 +10,14 @@ export interface Plant {
   price: number;
 }
 
+export interface CreatePlant {
+  name: string;
+  description: string;
+  categoryName: string;
+  imageUrl: string;
+  price: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +28,9 @@ export class PlantService {
 
   getPlants(): Observable<Plant[]> {
     return this.http.get<Plant[]>(this.apiUrl);
+  }
+
+  criarPlanta(planta: CreatePlant): Observable<Plant> {
+    return this.http.post<Plant>(this.apiUrl, planta);
   }
 }

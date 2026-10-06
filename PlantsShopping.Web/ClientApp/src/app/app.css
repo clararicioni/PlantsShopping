@@ -25,6 +25,10 @@ nav {
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
 }
 
+textarea{
+    resize: none;
+}
+
 .brand a {
   display: flex;
   align-items: center;

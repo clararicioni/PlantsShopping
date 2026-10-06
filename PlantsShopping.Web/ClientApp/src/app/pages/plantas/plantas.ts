@@ -1,14 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PlantService, Plant } from '../../services/plant.service';
+import localePt from '@angular/common/locales/pt';
+
+import {
+  PlantService,
+  Plant,
+  CreatePlant
+} from '../../services/plant.service';
+
+import { ModalInserirPlanta } from '../../shared/modal-inserir-planta/modal-inserir-planta';
+
+registerLocaleData(localePt, 'pt-BR');
 
 @Component({
   selector: 'app-plantas',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ModalInserirPlanta
   ],
   templateUrl: './plantas.html',
   styleUrl: './plantas.css',
@@ -21,9 +32,16 @@ export class Plantas implements OnInit {
   filtroPreco = 'todos';
   ordemNome = 'az';
 
+  mostrarModal = false;
+  salvandoPlanta = false;
+
   constructor(private plantService: PlantService) { }
 
   ngOnInit(): void {
+    this.carregarPlantas();
+  }
+
+  carregarPlantas(): void {
     this.plantService.getPlants().subscribe({
       next: (plants) => {
         this.plants = plants;
@@ -72,6 +90,39 @@ export class Plantas implements OnInit {
     });
 
     this.plantasFiltradas = resultado;
+  }
+
+  abrirModalInserir(): void {
+    this.mostrarModal = true;
+  }
+
+  fecharModalInserir(): void {
+    this.mostrarModal = false;
+  }
+
+  criarPlanta(planta: CreatePlant): void {
+    if (this.salvandoPlanta) {
+      return;
+    }
+
+    this.salvandoPlanta = true;
+
+    console.log('Objeto enviado:', planta);
+
+    this.plantService.criarPlanta(planta).subscribe({
+      next: () => {
+        this.salvandoPlanta = false;
+        this.mostrarModal = false;
+        this.carregarPlantas();
+      },
+      error: (error) => {
+        this.salvandoPlanta = false;
+
+        console.log('Status:', error.status);
+        console.log('Erro da API:', error.error);
+        console.log('Erros de validação:', error.error?.errors);
+      }
+    });
   }
 
   editarPlanta(planta: Plant): void {
