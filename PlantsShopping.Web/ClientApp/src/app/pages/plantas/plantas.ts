@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 import {
   PlantService,
@@ -36,7 +38,10 @@ export class Plantas implements OnInit {
   mostrarModal = false;
   salvandoPlanta = false;
 
-  constructor(private plantService: PlantService) { }
+  constructor(
+    private plantService: PlantService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.carregarPlantas();
@@ -110,7 +115,9 @@ export class Plantas implements OnInit {
 
     this.salvandoPlanta = true;
 
-    const requisicao = 'id' in planta
+    const editando = 'id' in planta;
+
+    const requisicao = editando
       ? this.plantService.atualizarPlanta(planta)
       : this.plantService.criarPlanta(planta);
 
@@ -119,6 +126,18 @@ export class Plantas implements OnInit {
         this.salvandoPlanta = false;
         this.fecharModalInserir();
         this.carregarPlantas();
+
+        if (editando) {
+          this.toastr.success(
+            'A planta foi atualizada com sucesso.',
+            'Planta atualizada'
+          );
+        } else {
+          this.toastr.success(
+            'A planta foi cadastrada com sucesso.',
+            'Planta cadastrada'
+          );
+        }
       },
       error: (error) => {
         this.salvandoPlanta = false;
@@ -126,6 +145,11 @@ export class Plantas implements OnInit {
         console.log('Status:', error.status);
         console.log('Erro da API:', error.error);
         console.log('Erros de validação:', error.error?.errors);
+
+        this.toastr.error(
+          'Não foi possível salvar a planta.',
+          'Erro'
+        );
       }
     });
   }
@@ -136,6 +160,39 @@ export class Plantas implements OnInit {
   }
 
   excluirPlanta(planta: Plant): void {
-    console.log('Excluir planta:', planta);
+    Swal.fire({
+      title: 'Excluir planta?',
+      text: `A planta "${planta.name}" será excluída.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((resultado) => {
+
+      if (!resultado.isConfirmed) {
+        return;
+      }
+
+      this.plantService.excluirPlanta(planta.id).subscribe({
+        next: () => {
+          this.toastr.success(
+            'A planta foi excluída com sucesso.',
+            'Planta excluída'
+          );
+
+          this.carregarPlantas();
+        },
+        error: (error) => {
+          console.log('Status:', error.status);
+          console.log('Erro da API:', error.error);
+
+          this.toastr.error(
+            'Não foi possível excluir a planta.',
+            'Erro'
+          );
+        }
+      });
+    });
   }
 }
