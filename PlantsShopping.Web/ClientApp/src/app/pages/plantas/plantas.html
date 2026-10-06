@@ -160,7 +160,8 @@
 
 </div>
 
-<app-modal-inserir-planta *ngIf="mostrarModal"
-                          (fechar)="fecharModalInserir()"
-                          (salvar)="criarPlanta($event)">
-</app-modal-inserir-planta>
+<app-modal-gerenciar-planta *ngIf="mostrarModal"
+                            [planta]="plantaEmEdicao"
+                            (fechar)="fecharModalInserir()"
+                            (salvar)="salvarPlanta($event)">
+</app-modal-gerenciar-planta>
